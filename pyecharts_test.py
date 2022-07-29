@@ -1,5 +1,4 @@
-import pyecharts
-from pyecharts.charts import Bar, Page
+import shutil
 
 from pyecharts import options as opts
 from pyecharts.charts import Bar, Grid, Line, Liquid, Page, Pie
@@ -7,14 +6,13 @@ from pyecharts.commons.utils import JsCode
 from pyecharts.components import Table
 from pyecharts.faker import Faker
 
-import shutil
 
 def bar_datazoom_slider() -> Bar:
     c = (
         Bar()
-        .add_xaxis(Faker.days_attrs)
-        .add_yaxis("商家A", Faker.days_values)
-        .set_global_opts(
+            .add_xaxis(Faker.days_attrs)
+            .add_yaxis("商家A", Faker.days_values)
+            .set_global_opts(
             title_opts=opts.TitleOpts(title="Bar-DataZoom（slider-水平）"),
             datazoom_opts=[opts.DataZoomOpts()],
         )
@@ -25,18 +23,18 @@ def bar_datazoom_slider() -> Bar:
 def line_markpoint() -> Line:
     c = (
         Line()
-        .add_xaxis(Faker.choose())
-        .add_yaxis(
+            .add_xaxis(Faker.choose())
+            .add_yaxis(
             "商家A",
             Faker.values(),
             markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="min")]),
         )
-        .add_yaxis(
+            .add_yaxis(
             "商家B",
             Faker.values(),
             markpoint_opts=opts.MarkPointOpts(data=[opts.MarkPointItem(type_="max")]),
         )
-        .set_global_opts(title_opts=opts.TitleOpts(title="Line-MarkPoint"))
+            .set_global_opts(title_opts=opts.TitleOpts(title="Line-MarkPoint"))
     )
     return c
 
@@ -45,7 +43,7 @@ def pie_rosetype() -> Pie:
     v = Faker.choose()
     c = (
         Pie()
-        .add(
+            .add(
             "",
             [list(z) for z in zip(v, Faker.values())],
             radius=["30%", "75%"],
@@ -53,14 +51,14 @@ def pie_rosetype() -> Pie:
             rosetype="radius",
             label_opts=opts.LabelOpts(is_show=False),
         )
-        .add(
+            .add(
             "",
             [list(z) for z in zip(v, Faker.values())],
             radius=["30%", "75%"],
             center=["75%", "50%"],
             rosetype="area",
         )
-        .set_global_opts(title_opts=opts.TitleOpts(title="Pie-玫瑰图示例"))
+            .set_global_opts(title_opts=opts.TitleOpts(title="Pie-玫瑰图示例"))
     )
     return c
 
@@ -69,20 +67,20 @@ def grid_mutil_yaxis() -> Grid:
     x_data = ["{}月".format(i) for i in range(1, 13)]
     bar = (
         Bar()
-        .add_xaxis(x_data)
-        .add_yaxis(
+            .add_xaxis(x_data)
+            .add_yaxis(
             "蒸发量",
             [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
             yaxis_index=0,
             color="#d14a61",
         )
-        .add_yaxis(
+            .add_yaxis(
             "降水量",
             [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
             yaxis_index=1,
             color="#5793f3",
         )
-        .extend_axis(
+            .extend_axis(
             yaxis=opts.AxisOpts(
                 name="蒸发量",
                 type_="value",
@@ -95,7 +93,7 @@ def grid_mutil_yaxis() -> Grid:
                 axislabel_opts=opts.LabelOpts(formatter="{value} ml"),
             )
         )
-        .extend_axis(
+            .extend_axis(
             yaxis=opts.AxisOpts(
                 type_="value",
                 name="温度",
@@ -111,7 +109,7 @@ def grid_mutil_yaxis() -> Grid:
                 ),
             )
         )
-        .set_global_opts(
+            .set_global_opts(
             yaxis_opts=opts.AxisOpts(
                 name="降水量",
                 min_=0,
@@ -130,8 +128,8 @@ def grid_mutil_yaxis() -> Grid:
 
     line = (
         Line()
-        .add_xaxis(x_data)
-        .add_yaxis(
+            .add_xaxis(x_data)
+            .add_yaxis(
             "平均温度",
             [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2],
             yaxis_index=2,
@@ -149,7 +147,7 @@ def grid_mutil_yaxis() -> Grid:
 def liquid_data_precision() -> Liquid:
     c = (
         Liquid()
-        .add(
+            .add(
             "lq",
             [0.3254],
             label_opts=opts.LabelOpts(
@@ -162,7 +160,7 @@ def liquid_data_precision() -> Liquid:
                 position="inside",
             ),
         )
-        .set_global_opts(title_opts=opts.TitleOpts(title="Liquid-数据精度"))
+            .set_global_opts(title_opts=opts.TitleOpts(title="Liquid-数据精度"))
     )
     return c
 
@@ -196,8 +194,8 @@ def page_draggable_layout():
         liquid_data_precision(),
         table_base(),
     )
-    page.render("page_draggable_layout.html")
+    page.render("render.html")
 
 
 page_draggable_layout()
-shutil.move('page_draggable_layout.html', 'templates/page_draggable_layout.html')
+shutil.move('render.html', 'templates/render.html')
