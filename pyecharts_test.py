@@ -1,3 +1,6 @@
+
+import pandas as pd
+
 import shutil
 
 from pyecharts import options as opts
@@ -7,15 +10,14 @@ from pyecharts.components import Table
 from pyecharts.faker import Faker
 
 
+df = pd.read_csv('data/ms_order_day.csv')
+print(df.head())
+
 def bar_datazoom_slider() -> Bar:
     c = (
         Bar()
             .add_xaxis(Faker.days_attrs)
-            .add_yaxis("商家A", Faker.days_values)
-            .set_global_opts(
-            title_opts=opts.TitleOpts(title="Bar-DataZoom（slider-水平）"),
-            datazoom_opts=[opts.DataZoomOpts()],
-        )
+            .add_yaxis("MS", df['GMV'].astype('int').values[:30])
     )
     return c
 
